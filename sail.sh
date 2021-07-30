@@ -83,6 +83,14 @@ then
     mkdir -p $DESTINATION_PATH
 fi
 
+# Test to see if the path contains a username /home/USER/* and extracts username for later chown
+echo "$DESTINATION_PATH" | grep "/home/*" &>/dev/null
+HOME_AND_USER_STATUS=$(echo $?)
+if [ "$HOME_AND_USER_STATUS" == "0" ]
+then
+    OWNER=$(echo "/home/acawley/public_html" | awk -F '/' '{print $3}')
+fi
+
 # WGET Command
 
 echo
@@ -161,9 +169,27 @@ then
     done
 
     echo -e "Transfer completed without error. Data Transferred: \c" && du -sh $DESTINATION_PATH
-
+    
     echo "View of the Destination folder:"
-    ls -lah $DESTINATION_PATH
+    ls -lah $DESTINATION_PATH && echo
+
+    sleep 2
+
+    echo "Currently the files are owned by `whoami`" && sleep 3
+    echo "Would you like me to update them so they're owned by $OWNER instead?" && sleep 3
+    echo "If you would like I can run:" && sleep 1 && echo
+
+    echo "chown -R $OWNER:$OWNER $DESTINATION_PATH" && echo && sleep 1
+
+    read -p "Would you like to chown?  y/n : " CHOWNA
+
+    if [ "$CHOWNA" == "y" ] || [ "$CHOWNA" == "yes" ]
+    then
+        chown -R $OWNER:$OWNER $DESTINATION_PATH
+        echo && echo "chown complete."
+    else
+        echo && echo "No chown was performed."
+    fi
 
 fi
 
