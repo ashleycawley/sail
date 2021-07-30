@@ -10,11 +10,11 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 # Check user is root
-# if [ `whoami` != "root" ]
-# then
-#     echo "You are not root."
-#     exit 1
-# fi
+if [ `whoami` != "root" ]
+then
+    echo "You are not root."
+    exit 1
+fi
 
 # Check that wget is installed
 type wget &>/dev/null
