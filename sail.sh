@@ -96,7 +96,7 @@ fi
 echo
 echo "Please be patient, FTP can be slow and your transfer could be large.
 
-If you're handling a large transfers it may be wise to do it within a session manager like tmux or screen.
+If you're handling a large transfer it may be wise to run it within a session manager like tmux or screen.
 
 Transferring files now..." && echo
 
@@ -107,7 +107,7 @@ WGET_STATUS=$(echo $?)
 # Catching wget errors and exiting
 if [ "$WGET_STATUS" == "6" ]
 then
-    echo "Username/password authentication failure. (wget exit code: $WGET_STATUS)"
+    echo "Username/password authentication failure. (wget exit code: $WGET_STATUS)" && sleep 2
     echo "Double-check your credentials against what you entered above and perhaps try again."
     exit 6
 fi
