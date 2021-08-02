@@ -94,16 +94,23 @@ fi
 # WGET Command
 
 echo
-echo "Please be patient, FTP can be slow and your transfer could be large." && echo
-echo "Remember: If you're handling large transfers it would be beneficial to do it within a session manager like tmux or screen."
-echo
-echo "Transferring files now..." && echo
+echo "Please be patient, FTP can be slow and your transfer could be large.
 
+If you're handling a large transfers it may be wise to do it within a session manager like tmux or screen.
 
+Transferring files now..." && echo
+
+# WGET Transfer
 wget --quiet -m -nH -P $DESTINATION_PATH --user=$USERNAME --password="$PASSWORD" ftp://$SERVER_IP/
 WGET_STATUS=$(echo $?)
 
 # Catching wget errors and exiting
+if [ "$WGET_STATUS" == "6" ]
+then
+    echo "Username/password authentication failure. (wget exit code: $WGET_STATUS)"
+    exit 6
+fi
+
 if [ "$WGET_STATUS" != "0" ]
 then
     echo "An error was encountered with wget, the exit code it gave was: $WGET_STATUS"
