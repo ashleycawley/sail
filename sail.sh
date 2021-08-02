@@ -88,7 +88,7 @@ echo "$DESTINATION_PATH" | grep "/home/*" &>/dev/null
 HOME_AND_USER_STATUS=$(echo $?)
 if [ "$HOME_AND_USER_STATUS" == "0" ]
 then
-    OWNER=$(echo "/home/acawley/public_html" | awk -F '/' '{print $3}')
+    OWNER=$(echo "$DESTINATION_PATH" | awk -F '/' '{print $3}')
 fi
 
 # WGET Command
