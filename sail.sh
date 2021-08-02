@@ -108,6 +108,7 @@ WGET_STATUS=$(echo $?)
 if [ "$WGET_STATUS" == "6" ]
 then
     echo "Username/password authentication failure. (wget exit code: $WGET_STATUS)"
+    echo "Double-check your credentials against what you entered above and perhaps try again."
     exit 6
 fi
 
